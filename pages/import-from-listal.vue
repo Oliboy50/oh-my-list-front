@@ -28,29 +28,7 @@
             Import
           </button>
         </div>
-        <table
-          class="table"
-        >
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="item in items"
-              :key="item.label"
-            >
-              <td><img :src="item.image"></td>
-              <td>{{ item.position }}. <b>{{ item.label }}</b></td>
-              <td>{{ item.description }}</td>
-              <td>{{ item.rating }}/100</td>
-            </tr>
-          </tbody>
-        </table>
+        <items-table :items="items"/>
       </template>
     </div>
   </section>
@@ -59,9 +37,13 @@
 
 <script>
   import { exportList } from '@oliboy50/listal-exporter';
+  import ItemsTable from '~/components/item/ItemsTable.vue';
 
   export default {
     middleware: 'require-admin',
+    components: {
+      ItemsTable,
+    },
     data () {
       return {
         html: '',

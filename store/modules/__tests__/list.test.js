@@ -1,4 +1,4 @@
-import list from '../list';
+import module from '../list';
 import axios from 'axios';
 
 let mockAxiosGetResult;
@@ -9,27 +9,26 @@ jest.mock('axios', () => ({
 describe(`list store module`, () => {
   describe(`actions`, () => {
     let state;
-    let action;
-    const testedAction = (context = {}, payload = {}) => {
-      return list.actions[action].bind({$axios: axios})(
+    const action = (name, context = {}, payload = {}) => {
+      return module.actions[name].bind({$axios: axios})(
         {
           state,
-          commit: jest.fn((mutation, payload) => list.mutations[mutation](state, payload)),
+          commit: jest.fn((mutation, payload) => module.mutations[mutation](state, payload)),
           ...context,
         },
         payload
       );
     };
+
     beforeEach(() => {
-      state = list.state();
+      state = module.state();
     });
 
-    describe(action = 'getLists', () => {
+    describe('getLists', () => {
       it(`returns an empty array if api returns an empty array`, async (done) => {
         mockAxiosGetResult = {'hydra:member': []};
         const expected = [];
-        expect(await testedAction()).toEqual(expected);
-        expect(state.lists).toEqual(expected);
+        expect(await action('getLists')).toEqual(expected);
         done();
       });
 
@@ -71,8 +70,33 @@ describe(`list store module`, () => {
             positions: [],
           },
         ];
-        expect(await testedAction({dispatch: mockDispatchAction})).toEqual(expected);
-        expect(state.lists).toEqual(expected);
+        expect(await action('getLists', {dispatch: mockDispatchAction})).toEqual(expected);
+        done();
+      });
+    });
+
+    describe('getList', () => {
+      it(`stores and returns list from api if no params provided`, async (done) => {
+        mockAxiosGetResult = {id: 'foo'};
+        const expected = {id: 'foo'};
+        expect(await action('getList')).toEqual(expected);
+        expect(state.lists).toEqual([expected]);
+        done();
+      });
+
+      it(`stores and returns list from api if it does not already exists`, async (done) => {
+        state.lists = [{id: 'foo'}];
+        mockAxiosGetResult = {id: 'bar'};
+        const expected = {id: 'bar'};
+        expect(await action('getList', {}, {id: 'bar'})).toEqual(expected);
+        expect(state.lists).toEqual([{id: 'foo'}, expected]);
+        done();
+      });
+
+      it(`returns list from the store if it exists`, async (done) => {
+        state.lists = [{id: 'foo'}];
+        expect(await action('getList', {}, {id: 'foo'})).toEqual({id: 'foo'});
+        expect(axios.$get).not.toBeCalled();
         done();
       });
     });

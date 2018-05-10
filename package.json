@@ -54,7 +54,8 @@
     },
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
-    ]
+    ],
+    "clearMocks": true
   },
   "babel": {
     "env": {

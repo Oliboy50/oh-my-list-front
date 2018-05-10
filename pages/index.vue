@@ -3,15 +3,20 @@
   <section class="section">
     <div class="container is-fluid">
 
-      <div class="tile is-ancestor">
+      <div
+        v-for="(listsChunk, index) in listsChunks"
+        :key="index"
+        class="tile is-ancestor"
+      >
         <div
-          v-for="list in lists"
+          v-for="list in listsChunk"
           :key="list.id"
           class="tile is-parent"
         >
-          <app-list
+          <list-preview
             :list="list"
             class="tile is-child box"
+            @click.native="$router.push({ name: 'list-id', params: {id: list.id} })"
           />
         </div>
       </div>
@@ -22,16 +27,28 @@
 </template>
 
 <script>
-  import AppList from '~/components/lists/list.vue';
+  import ListPreview from '~/components/list/ListPreview.vue';
 
   export default {
+    middleware: 'require-user',
     components: {
-      AppList,
+      ListPreview,
     },
     data () {
       return {
         lists: [],
       };
+    },
+    computed: {
+      listsChunks() {
+        let chunkedLists = [];
+
+        for (let i = 0; i < this.lists.length; i += 3) {
+          chunkedLists.push(this.lists.slice(i, i + 3));
+        }
+
+        return chunkedLists;
+      },
     },
     async asyncData ({ store }) {
       return {
