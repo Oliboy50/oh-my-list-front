@@ -9,12 +9,10 @@
           :key="list.id"
           class="tile is-parent"
         >
-          <article class="tile is-child box">
-            <p class="title">{{ list.label }}</p>
-            <div class="content">
-              <p>{{ list.description }}</p>
-            </div>
-          </article>
+          <app-list
+            :list="list"
+            class="tile is-child box"
+          />
         </div>
       </div>
 
@@ -24,11 +22,11 @@
 </template>
 
 <script>
-  import list from '~/components/list.vue';
+  import AppList from '~/components/lists/list.vue';
 
   export default {
     components: {
-      list,
+      AppList,
     },
     data () {
       return {

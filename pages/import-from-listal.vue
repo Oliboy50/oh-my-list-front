@@ -99,7 +99,7 @@
         this.html = '';
       },
       async importList () {
-        const item = await this.$store.dispatch('list/saveList', {
+        await this.$store.dispatch('list/saveList', {
           data: {
             label: this.info.label,
             description: this.info.description,
@@ -118,7 +118,6 @@
             })),
           },
         });
-        console.log(item);
       },
     },
   };

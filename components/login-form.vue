@@ -78,9 +78,6 @@
         });
         this.$router.replace({ path: this.redirectUrl });
       },
-      onCancel () {
-        console.log('canceled');
-      },
     },
   };
 </script>

@@ -13,20 +13,16 @@ export default {
     ...arrayMutations('items'),
   },
   actions: {
-    async getItem ({state, commit}, {id}) {
-      let item = state.items.find(item => item.id === id);
+    async getItem ({state, commit}, {IRI}) {
+      let item = state.items.find(item => item['@id'] === IRI);
       if (item) {
         return item;
       }
 
-      item = await this.$axios.$get(buildIRI(id));
+      item = await this.$axios.$get(IRI);
       commit('pushItem_items', item);
 
       return item;
-    },
-    addItem (item) {
-    },
-    updateItem (id, item) {
     },
   },
 };

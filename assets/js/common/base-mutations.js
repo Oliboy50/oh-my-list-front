@@ -54,8 +54,8 @@ export const arrayMutations = (key) => ({
 
 // Helpers
 export const pushOrUpdateItem = (commit, state, stateKey, item, itemUniqKey = 'id') => {
-  const existingItemIndex = state[stateKey].findIndex(l => l[itemUniqKey] === item[itemUniqKey]);
-  if (existingItemIndex) {
+  const existingItemIndex = state[stateKey].findIndex(l => typeof l[itemUniqKey] !== 'undefined' && l[itemUniqKey] === item[itemUniqKey]);
+  if (existingItemIndex > -1) {
     commit(`${UPDATE_ITEM}${stateKey}`, {item, index: existingItemIndex});
   } else {
     commit(`${PUSH_ITEM}${stateKey}`, item);

@@ -13,8 +13,24 @@ export default {
     ...arrayMutations('lists'),
   },
   actions: {
-    async getLists ({state, commit}) {
-      const lists = (await this.$axios.$get(buildIRI()))['hydra:member'];
+    async getLists ({state, commit, dispatch}) {
+      const lists = await Promise.all(
+        (await this.$axios.$get(buildIRI()))['hydra:member']
+          // Add details of the first lists item
+          .map(async list => {
+            const cloned = {...list};
+            const firstPosition = cloned.positions.shift();
+            if (!firstPosition) {
+              return list;
+            }
+
+            cloned.positions = [
+              await dispatch('position/getPosition', {IRI: firstPosition}, { root: true }),
+              ...list.positions,
+            ];
+            return cloned;
+          })
+      );
       lists.forEach(list => pushOrUpdateItem(commit, state, 'lists', list));
 
       return lists;

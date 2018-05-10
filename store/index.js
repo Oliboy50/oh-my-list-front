@@ -2,6 +2,7 @@ import Vuex from 'vuex';
 
 import user from './modules/user';
 import list from './modules/list';
+import position from './modules/position';
 import item from './modules/item';
 
 export default () => {
@@ -10,6 +11,7 @@ export default () => {
     modules: {
       user,
       list,
+      position,
       item,
     },
   });
