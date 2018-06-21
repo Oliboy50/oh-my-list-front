@@ -2,17 +2,24 @@
 
   <article
     :style="{ backgroundImage: `url('${imageUrl}')` }"
+    class="box"
+    @click="$router.push({ name: 'list-id', params: {id: list.id} })"
   >
-    <p class="title">{{ list.label }}</p>
-    <div class="content">
-      <p>{{ list.description }}</p>
+    <h2 class="title has-text-centered">{{ list.label }}</h2>
+    <div class="content has-text-justified">
+      <four-lines-max-text>{{ list.description }}</four-lines-max-text>
     </div>
   </article>
 
 </template>
 
 <script>
+  import FourLinesMaxText from '~/components/FourLinesMaxText.vue';
+
   export default {
+    components: {
+      FourLinesMaxText,
+    },
     props: {
       list: {
         type: Object,
@@ -36,6 +43,12 @@
     position: relative;
     background-size: 0 0;
     transform: translateZ(0); // fixes Chrome bug - it needs a redraw to paint the background
+    transition: box-shadow .15s;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: -2px 2px 4px rgba(20, 20, 20, .2), 0 0 5px 2px rgba(10, 10, 10, .1);
+    }
 
     &::after {
       content: "";

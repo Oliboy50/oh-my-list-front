@@ -1,16 +1,16 @@
 <template>
 
-  <item-form/>
+  <list-form/>
 
 </template>
 
 <script>
-  import ItemForm from '~/components/item/ItemForm.vue';
+  import ListForm from '~/components/list/ListForm.vue';
 
   export default {
     middleware: 'require-admin',
     components: {
-      ItemForm,
+      ListForm,
     },
   };
 </script>

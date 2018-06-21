@@ -1,47 +1,43 @@
 <template>
 
-  <section class="section">
-    <div class="container is-fluid">
-      <template v-if="!list">
-        <div class="buttons is-centered">
-          <button
-            type="button"
-            class="button"
-            @click="extractListFromHtml"
-          >
-            Extract list data
-          </button>
-        </div>
-        <textarea
-          v-model="html"
-          placeholder="Insert HTML of a list from www.listal.com"
-          class="textarea"
+  <div>
+    <template v-if="!list">
+      <buttons-group>
+        <default-button
+          label="Extract list data"
+          @click="extractListFromHtml"
         />
-      </template>
-      <template v-else>
-        <div class="buttons is-centered">
-          <button
-            type="button"
-            class="button"
-            @click="importList"
-          >
-            Import
-          </button>
-        </div>
-        <items-table :items="items"/>
-      </template>
-    </div>
-  </section>
+      </buttons-group>
+      <textarea
+        v-model="html"
+        placeholder="Insert HTML of a list from www.listal.com"
+        class="textarea"
+      />
+    </template>
+    <template v-else>
+      <buttons-group>
+        <default-button
+          label="Import"
+          @click="importList"
+        />
+      </buttons-group>
+      <items-table :items="items"/>
+    </template>
+  </div>
 
 </template>
 
 <script>
   import { exportList } from '@oliboy50/listal-exporter';
+  import ButtonsGroup from '~/components/ButtonsGroup.vue';
+  import DefaultButton from '~/components/buttons/DefaultButton.vue';
   import ItemsTable from '~/components/item/ItemsTable.vue';
 
   export default {
     middleware: 'require-admin',
     components: {
+      ButtonsGroup,
+      DefaultButton,
       ItemsTable,
     },
     data () {

@@ -4,24 +4,31 @@
   "description": "anime-list-front",
   "author": "Oliboy50",
   "private": true,
+  "engines": {
+    "node": "8.11.2",
+    "npm": ">= 5.6.0"
+  },
   "scripts": {
-    "dev": "nuxt",
+    "dev": "cross-env HOST=0.0.0.0 nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint && npm run test"
   },
   "dependencies": {
     "@mdi/font": "2.2.43",
     "@nuxtjs/axios": "5.1.1",
     "@oliboy50/listal-exporter": "0.1.1",
+    "buefy": "0.6.5",
     "cookie": "0.3.1",
     "js-cookie": "2.2.0",
-    "jwt-decode": "^2.2.0",
+    "jwt-decode": "2.2.0",
+    "node-sass": "4.8.3",
     "nuxt": "1.4.0",
-    "nuxt-buefy": "0.0.4"
+    "nuxt-buefy": "0.0.4",
+    "sass-loader": "7.0.1"
   },
   "devDependencies": {
     "@vue/test-utils": "^1.0.0-beta.15",
@@ -34,10 +41,7 @@
     "eslint-plugin-vue": "^4.0.0",
     "jest": "^22.4.3",
     "jest-serializer-vue": "^1.0.0",
-    "node-sass": "^4.8.3",
-    "sass-loader": "^6.0.7",
-    "vue-jest": "^2.5.0",
-    "vue-style-loader": "^4.1.0"
+    "vue-jest": "^2.5.0"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -61,7 +65,14 @@
     "env": {
       "test": {
         "presets": [
-          ["env", { "targets": { "node": "current" }}]
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
         ]
       }
     }

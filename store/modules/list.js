@@ -18,27 +18,31 @@ export default {
         (await this.$axios.$get(buildIRI()))['hydra:member']
           // Add details of the first lists item
           .map(async list => {
-            const cloned = {...list};
-            const firstPosition = cloned.positions.shift();
+            const positions = [...list.positions];
+            const firstPosition = positions.shift();
             if (!firstPosition) {
               return list;
             }
 
-            cloned.positions = [
-              await dispatch('position/getPosition', {IRI: firstPosition}, { root: true }),
-              ...list.positions,
-            ];
-            return cloned;
+            positions.unshift(await dispatch('position/getPosition', {IRI: firstPosition}, { root: true }));
+            return {
+              ...list,
+              positions,
+            };
           })
       );
     },
-    async getList ({state, commit}, {id}) {
-      let list = state.lists.find(l => l.id === id);
+    async getList ({state, commit}, {IRI, id}) {
+      if (!IRI && !id) {
+        throw new Error('"IRI" or "id" are required');
+      }
+
+      let list = state.lists.find(l => IRI ? l['@id'] === IRI : l.id === id);
       if (list) {
         return list;
       }
 
-      list = await this.$axios.$get(buildIRI(id));
+      list = await this.$axios.$get(IRI || buildIRI(id));
       commit('pushItem_lists', list);
 
       return list;

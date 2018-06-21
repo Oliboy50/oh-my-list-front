@@ -1,75 +1,67 @@
 <template>
 
-  <section class="section">
-    <div class="container is-fluid">
+  <form
+    @submit.prevent="login"
+  >
 
-      <form
-        class="component-login-form"
-        @submit.prevent="login"
+    <form-block
+      label="Sign in"
+    >
+      <b-field
+        label="Email"
+        label-for="component-login-form_email"
       >
+        <b-input
+          id="component-login-form_email"
+          v-model="email"
+          type="email"
+          required
+        />
+      </b-field>
 
-        <div class="field">
-          <label
-            for="component-login-form_email"
-            class="label"
-          >
-            Email
-          </label>
-          <div class="control">
-            <input
-              id="component-login-form_email"
-              v-model="email"
-              type="text"
-              class="input"
-              required
-            >
-          </div>
-        </div>
+      <b-field
+        label="Password"
+        label-for="component-login-form_password"
+      >
+        <b-input
+          id="component-login-form_password"
+          v-model="password"
+          type="password"
+          required
+        />
+      </b-field>
+    </form-block>
 
-        <div class="field">
-          <label
-            for="component-login-form_password"
-            class="label"
-          >
-            Password
-          </label>
-          <div class="control">
-            <input
-              id="component-login-form_password"
-              v-model="password"
-              type="password"
-              class="input"
-              required
-            >
-          </div>
-        </div>
+    <buttons-group>
+      <submit-button/>
+    </buttons-group>
 
-        <div class="field is-grouped is-grouped-centered">
-          <div class="control">
-            <button
-              type="submit"
-              class="button is-primary"
-            >
-              Submit
-            </button>
-          </div>
-        </div>
-
-      </form>
-
-    </div>
-  </section>
+  </form>
 
 </template>
 
 <script>
+  import FormBlock from '~/components/FormBlock.vue';
+  import ButtonsGroup from '~/components/ButtonsGroup.vue';
+  import SubmitButton from '~/components/buttons/SubmitButton.vue';
+
   export default {
+    components: {
+      FormBlock,
+      ButtonsGroup,
+      SubmitButton,
+    },
     data () {
       return {
         email: '',
         password: '',
         redirectUrl: '/',
       };
+    },
+    fetch ({ store, redirect }) {
+      if (store.state.user.user.isUser) {
+        redirect('/');
+      }
     },
     created () {
       if (this.$route.query.redirectUrl) {

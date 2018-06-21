@@ -1,17 +1,12 @@
 <template>
-  <section class="section">
-    <div class="container is-fluid">
 
-      <article>
-        <p class="title">{{ list.label }}</p>
-        <div class="content">
-          <p>{{ list.description }}</p>
-        </div>
-        <items-table :items="items"/>
-      </article>
-
+  <article>
+    <p class="title">{{ list.label }}</p>
+    <div class="content">
+      <p>{{ list.description }}</p>
     </div>
-  </section>
+    <items-table :items="items"/>
+  </article>
 
 </template>
 

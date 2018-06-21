@@ -76,11 +76,8 @@ describe(`list store module`, () => {
     });
 
     describe('getList', () => {
-      it(`stores and returns list from api if no params provided`, async (done) => {
-        mockAxiosGetResult = {id: 'foo'};
-        const expected = {id: 'foo'};
-        expect(await action('getList')).toEqual(expected);
-        expect(state.lists).toEqual([expected]);
+      it(`throws if nor "IRI" nor "id" params provided`, async (done) => {
+        await expect(action('getList')).rejects.toThrowError(`"IRI" or "id" are required`);
         done();
       });
 

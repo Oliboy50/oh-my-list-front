@@ -1,14 +1,14 @@
 const pkg = require('./package');
-const env = require('./env');
 
-const API_BASE_URL = process.env.API_BASE_URL || env.API_BASE_URL;
+const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:8000';
+const HTTPS_ENABLED = process.env.HTTPS_ENABLED === 'true';
 
 module.exports = {
   mode: 'universal',
 
   env: {
-    API_BASE_URL: API_BASE_URL,
-    HTTPS_ENABLED: process.env.HTTPS_ENABLED || env.HTTPS_ENABLED,
+    API_BASE_URL,
+    HTTPS_ENABLED,
   },
 
   /*
@@ -35,6 +35,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    '@mdi/font/css/materialdesignicons.min.css',
     '~/assets/scss/buefy.scss',
   ],
 

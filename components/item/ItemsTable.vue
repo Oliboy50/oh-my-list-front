@@ -8,7 +8,7 @@
         v-for="item in items"
         :key="item.label"
       >
-        <td><img :src="item.image"></td>
+        <td><figure class="image"><img :src="item.image"></figure></td>
         <td>{{ item.position }}. <b>{{ item.label }}</b></td>
         <td class="content">{{ item.description }}</td>
         <td>{{ item.rating > -1 ? item.rating : '?' }}/100</td>

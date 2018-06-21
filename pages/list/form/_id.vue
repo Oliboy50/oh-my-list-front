@@ -1,22 +1,22 @@
 <template>
 
-  <item-form
-    :existing-item="existingItem"
+  <list-form
+    :existing-list="existingList"
   />
 
 </template>
 
 <script>
-  import ItemForm from '~/components/item/ItemForm.vue';
+  import ListForm from '~/components/list/ListForm.vue';
 
   export default {
     middleware: 'require-admin',
     components: {
-      ItemForm,
+      ListForm,
     },
     async asyncData ({ route, store }) {
       return {
-        existingItem: await store.dispatch('item/getItem', { id: route.params.id }),
+        existingList: await store.dispatch('list/getList', { id: route.params.id }),
       };
     },
   };
