@@ -25,6 +25,13 @@ describe(`list store module`, () => {
     });
 
     describe('getLists', () => {
+      it(`returns an empty array if api returns an unexpected value`, async (done) => {
+        mockAxiosGetResult = null;
+        const expected = [];
+        expect(await action('getLists')).toEqual(expected);
+        done();
+      });
+
       it(`returns an empty array if api returns an empty array`, async (done) => {
         mockAxiosGetResult = {'hydra:member': []};
         const expected = [];

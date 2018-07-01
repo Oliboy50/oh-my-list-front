@@ -14,23 +14,28 @@ export default {
   },
   actions: {
     async getLists ({dispatch}) {
-      return await Promise.all(
-        (await this.$axios.$get(buildIRI()))['hydra:member']
-          // Add details of the first lists item
-          .map(async list => {
-            const positions = [...list.positions];
-            const firstPosition = positions.shift();
-            if (!firstPosition) {
-              return list;
-            }
+      const apiResults = await this.$axios.$get(buildIRI());
+      if (!apiResults || !apiResults['hydra:member']) {
+        return [];
+      }
 
-            positions.unshift(await dispatch('position/getPosition', {IRI: firstPosition}, { root: true }));
-            return {
-              ...list,
-              positions,
-            };
-          })
-      );
+      const lists = apiResults['hydra:member']
+        // Add details of the first lists item
+        .map(async list => {
+          const positions = [...list.positions];
+          const firstPosition = positions.shift();
+          if (!firstPosition) {
+            return list;
+          }
+
+          positions.unshift(await dispatch('position/getPosition', {IRI: firstPosition}, { root: true }));
+          return {
+            ...list,
+            positions,
+          };
+        });
+
+      return await Promise.all(lists);
     },
     async getList ({state, commit}, {IRI, id}) {
       if (!IRI && !id) {
