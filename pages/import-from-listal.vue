@@ -29,15 +29,11 @@
 
 <script>
   import { exportList } from '@oliboy50/listal-exporter';
-  import ButtonsGroup from '~/components/ButtonsGroup.vue';
-  import DefaultButton from '~/components/buttons/DefaultButton.vue';
   import ItemsTable from '~/components/item/ItemsTable.vue';
 
   export default {
     middleware: 'require-admin',
     components: {
-      ButtonsGroup,
-      DefaultButton,
       ItemsTable,
     },
     data () {

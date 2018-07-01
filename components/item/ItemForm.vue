@@ -70,18 +70,10 @@
 </template>
 
 <script>
-  import FormBlock from '~/components/FormBlock.vue';
-  import ButtonsGroup from '~/components/ButtonsGroup.vue';
-  import SubmitButton from '~/components/buttons/SubmitButton.vue';
-  import DefaultButton from '~/components/buttons/DefaultButton.vue';
   import ItemsTable from '~/components/item/ItemsTable.vue';
 
   export default {
     components: {
-      FormBlock,
-      ButtonsGroup,
-      SubmitButton,
-      DefaultButton,
       ItemsTable,
     },
     props: {

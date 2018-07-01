@@ -45,6 +45,7 @@ module.exports = {
   plugins: [
     { src: '~/plugins/setup-token' },
     { src: '~/plugins/axios' },
+    { src: '~/plugins/register-global-components' },
   ],
 
   /*

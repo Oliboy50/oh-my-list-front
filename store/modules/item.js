@@ -13,17 +13,17 @@ export default {
     ...arrayMutations('items'),
   },
   actions: {
-    async getItem ({state, commit}, {IRI, id}) {
-      if (!IRI && !id) {
-        throw new Error('"IRI" or "id" are required');
+    async getItem ({state, commit}, {IRI}) {
+      if (!IRI) {
+        throw new Error('"IRI" is required');
       }
 
-      let item = state.items.find(i => IRI ? i['@id'] === IRI : i.id === id);
+      let item = state.items.find(i => i['@id'] === IRI);
       if (item) {
         return item;
       }
 
-      item = await this.$axios.$get(IRI || buildIRI(id));
+      item = await this.$axios.$get(IRI);
       commit('pushItem_items', item);
 
       return item;

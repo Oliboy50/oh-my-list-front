@@ -37,17 +37,17 @@ export default {
 
       return await Promise.all(lists);
     },
-    async getList ({state, commit}, {IRI, id}) {
-      if (!IRI && !id) {
-        throw new Error('"IRI" or "id" are required');
+    async getList ({state, commit}, {IRI}) {
+      if (!IRI) {
+        throw new Error('"IRI" is required');
       }
 
-      let list = state.lists.find(l => IRI ? l['@id'] === IRI : l.id === id);
+      let list = state.lists.find(l => l['@id'] === IRI);
       if (list) {
         return list;
       }
 
-      list = await this.$axios.$get(IRI || buildIRI(id));
+      list = await this.$axios.$get(IRI);
       commit('pushItem_lists', list);
 
       return list;

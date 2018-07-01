@@ -18,6 +18,8 @@
       ItemsTable,
     },
     async asyncData ({ store, route }) {
+      await store.dispatch('list/getList', { id: route.params.id });
+      await store.dispatch('list/getList', { id: route.params.id });
       return {
         list: await store.dispatch('list/getList', { id: route.params.id }),
       };

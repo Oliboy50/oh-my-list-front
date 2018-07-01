@@ -41,16 +41,7 @@
 </template>
 
 <script>
-  import FormBlock from '~/components/FormBlock.vue';
-  import ButtonsGroup from '~/components/ButtonsGroup.vue';
-  import SubmitButton from '~/components/buttons/SubmitButton.vue';
-
   export default {
-    components: {
-      FormBlock,
-      ButtonsGroup,
-      SubmitButton,
-    },
     data () {
       return {
         email: '',
